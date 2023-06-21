@@ -32,9 +32,10 @@ public class FileHelper <T> {
                 else data = parseClassToString((Lop) obj);
                 Log.i("DATA", data);
 
-                FileOutputStream fos = context.openFileOutput("classes.txt", context.MODE_PRIVATE);
+                FileOutputStream fos = context.openFileOutput("classes.txt",  context.MODE_APPEND);
                 OutputStreamWriter osw = new OutputStreamWriter(fos);
-                osw.write(data);
+//                osw.write("");
+                osw.append(data);
                 osw.close();
                 Log.i("INSERT", "OK");
             } catch (FileNotFoundException e) {
@@ -50,7 +51,7 @@ public class FileHelper <T> {
                 obj.getTen() + "," +
                 obj.getNamSinh() + "" + "," +
                 obj.getNamHoc() + "" + "," +
-                obj.getQueQuan() + "\n";
+                obj.getQueQuan();
         return data;
     }
 
@@ -89,21 +90,24 @@ public class FileHelper <T> {
     List<Lop> getAllClasses() throws IOException {
         List<Lop> classes = new ArrayList<>();
         FileInputStream fis = context.openFileInput("classes.txt");
-        InputStreamReader ins = new InputStreamReader(fis);
-        BufferedReader br = new BufferedReader(ins);
-        String row = br.readLine();
 
-        while (row != null){
 
-            Log.i("READ DATA", row);
-            String[] svData = row.split(",");
-            classes.add(new Lop(
-                    Integer.parseInt( svData[0]),
-                    svData[1],
-                    svData[2]
-            ));
-            row = br.readLine();
-        }
+            InputStreamReader ins = new InputStreamReader(fis);
+            BufferedReader br = new BufferedReader(ins);
+            String row = br.readLine();
+
+            while (row != null) {
+
+                Log.i("READ DATA", row);
+                String[] svData = row.split(",");
+                classes.add(new Lop(
+                        Integer.parseInt(svData[0]),
+                        svData[1],
+                        svData[2]
+                ));
+                row = br.readLine();
+            }
+
 
         return classes;
     }
