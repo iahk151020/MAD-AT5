@@ -1,10 +1,12 @@
 package com.example.mad;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -72,15 +74,25 @@ public class DBHelper extends SQLiteOpenHelper {
             int namSinh = cursor.getInt(4);
 
             listSinhVien.add(new SinhVien(maSinhVien, namHoc, namSinh, ten, queQuan));
+            cursor.moveToNext();
         }
 
         return listSinhVien;
     }
 
     void insertSinhVien(SinhVien sinhVien){
-        SQLiteDatabase db = getReadableDatabase();
-        db.execSQL("INSERT INTO sinhVien (maSinhVien, ten, queQuan, namHoc, namSinh ) VALUES (?,?,?,?,?)",
-                new String[]{sinhVien.getMaSinhVien() + "", sinhVien.getTen(), sinhVien.getQueQuan(), sinhVien.getNamHoc() + "", sinhVien.getNamSinh() + ""});
+        SQLiteDatabase db = this.getWritableDatabase();
+
+
+        ContentValues values = new ContentValues();
+        values.put("maSinhVien", sinhVien.getMaSinhVien());
+        values.put("ten", sinhVien.getTen());
+        values.put("queQuan", sinhVien.getQueQuan());
+        values.put("namHoc", sinhVien.getNamHoc());
+        values.put("namSinh", sinhVien.getNamSinh());
+
+        db.insert(TABLE_SINHVIEN, null, values);
+
     }
 
     public List<Lop> getLopList() {
@@ -95,18 +107,26 @@ public class DBHelper extends SQLiteOpenHelper {
             String tenLop = cursor.getString(1);
             String moTa = cursor.getString(2);
 
-
             listLop.add(new Lop(maLop, tenLop, moTa));
+            cursor.moveToNext();
         }
 
         return listLop;
     }
 
     void insertLop(Lop lop){
-        SQLiteDatabase db = getReadableDatabase();
-        db.execSQL("INSERT INTO lop (maLop, tenLop, moTa ) VALUES (?,?,?)",
-                new String[]{lop.getMaLop() + "", lop.getTenLop(), lop.getMoTa()});
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put("maLop", lop.getMaLop());
+        values.put("tenLop", lop.getTenLop());
+        values.put("moTa", lop.getMoTa());
+
+        db.insert(TABLE_LOP, null, values);
     }
 
+    int genMaSinhVien() {
+        return getSinhVienList().size() + 1;
+    }
 
 }

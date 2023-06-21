@@ -6,12 +6,13 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class LVSinhVienAdapter extends BaseAdapter {
 
-    final ArrayList<SinhVien> listSinhVien;
+    final List<SinhVien> listSinhVien;
 
-    public LVSinhVienAdapter(ArrayList<SinhVien> listSinhVien) {
+    public LVSinhVienAdapter(List<SinhVien> listSinhVien) {
         this.listSinhVien = listSinhVien;
     }
 

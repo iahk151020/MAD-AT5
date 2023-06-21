@@ -12,14 +12,14 @@ public class ThemLopActivity extends AppCompatActivity {
 
     Button btnAdd;
     TextInputEditText tieMaLop, tieTenLop, tieMoTa;
-    DBHelper dbHelper;
+    FileHelper fileHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_them_lop);
 
-        dbHelper = new DBHelper(this);
+        fileHelper = new FileHelper("classes.txt", this);
 
         btnAdd = findViewById(R.id.btn_submit_them_lop);
         tieMaLop = findViewById(R.id.tie_ma_lop);
@@ -33,7 +33,7 @@ public class ThemLopActivity extends AppCompatActivity {
                 String tenLop = tieTenLop.getText().toString();
                 String moTa = tieMoTa.getText().toString();
 
-                dbHelper.insertLop(new Lop(maLop, tenLop, moTa));
+                fileHelper.insertToFile(new Lop(maLop, tenLop, moTa));
             }
         });
     }

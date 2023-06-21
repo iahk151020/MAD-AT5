@@ -6,12 +6,13 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class LVLopAdapter extends BaseAdapter {
 
-    final ArrayList<Lop> listLop;
+    final List<Lop> listLop;
 
-    public LVLopAdapter(ArrayList<Lop> listLop) {
+    public LVLopAdapter(List<Lop> listLop) {
         this.listLop = listLop;
     }
 

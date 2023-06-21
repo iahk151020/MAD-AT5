@@ -3,24 +3,30 @@ package com.example.mad;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import com.google.android.material.textfield.TextInputEditText;
+
+import java.io.IOException;
 
 public class ThemSinhViennActivity extends AppCompatActivity {
 
     Button btnAdd;
     TextInputEditText tieTenSinhVien, tieMaSinhVien, tieQueQuan, tieNamHoc, tieNamSinh;
     DBHelper dbHelper;
+    FileHelper fileHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_them_sinh_vienn);
 
-        dbHelper = new DBHelper(this);
+//        dbHelper = new DBHelper(this);
+        fileHelper = new FileHelper("", this);
 
         btnAdd = findViewById(R.id.btn_submit_them_sinh_vien);
         tieTenSinhVien = findViewById(R.id.tie_ten);
@@ -28,6 +34,7 @@ public class ThemSinhViennActivity extends AppCompatActivity {
         tieQueQuan = findViewById(R.id.tie_que_quan);
         tieNamHoc = findViewById(R.id.tie_nam_hoc);
         tieNamSinh = findViewById(R.id.tie_nam_sinh);
+
 
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
@@ -39,8 +46,7 @@ public class ThemSinhViennActivity extends AppCompatActivity {
                 int namHoc = Integer.parseInt(tieNamHoc.getText().toString());
                 int namSinh = Integer.parseInt(tieNamSinh.getText().toString());
 
-                dbHelper.insertSinhVien(new SinhVien(maSinhVien, namSinh, namHoc, tenSinhVien, queQuan));
-
+                fileHelper.insertToFile(new SinhVien(maSinhVien, namSinh, namHoc, tenSinhVien, queQuan));
             }
         });
 
